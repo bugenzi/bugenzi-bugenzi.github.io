@@ -39,7 +39,7 @@ document.getElementById('submitButton').addEventListener('click', submitForm=(ev
     xhr.open('POST', 'https://node-mailer-sender.herokuapp.com/send_data');
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(json))
-    alert("Ty for submiting ")
+    alert("Thank you for submitting")
     setTimeout(()=>{
         location.reload();
     },1000)
