@@ -26,8 +26,17 @@ document.getElementById('submitButton').addEventListener('click', submitForm=(e)
     var message = getInputValue("message");
     var email = getInputValue("email");
 
-    saveMessage(name,email,message)
+    try {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://node-mailer-sender.herokuapp.com/send_data');
+        xhr.send({name,message,email})
+        saveMessage(name,email,message)
+    } catch (error) {
+        console.log(error)
+    }
     
+  
+
 });
 // gets the values from the from 
 function getInputValue(id){
