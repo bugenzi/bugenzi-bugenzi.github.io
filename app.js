@@ -19,7 +19,7 @@ let messageRef = firebase.database().ref('messages');
 
 //Creating a listiner to the form 
 document.getElementById('submitButton').addEventListener('click', submitForm=(e)=>{
- debugger;
+
  new Event(e).preventDefault();
     
     var name = getInputValue("name");
