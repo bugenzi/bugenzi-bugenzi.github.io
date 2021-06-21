@@ -19,21 +19,23 @@ let messageRef = firebase.database().ref('messages');
 
 //Creating a listiner to the form 
 document.getElementById('submitButton').addEventListener('click', submitForm=(e)=>{
- 
-
+ debugger;
+ new Event(e).preventDefault();
     
     var name = getInputValue("name");
     var message = getInputValue("message");
     var email = getInputValue("email");
 
-    try {
+    saveMessage(name,email,message)
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://node-mailer-sender.herokuapp.com/send_data');
-        xhr.send({name,message,email})
-        saveMessage(name,email,message)
-    } catch (error) {
-        console.log(error)
-    }
+        xhr.send({name,message,email}).then(()=>{
+            // window.location.reload()
+        }).catch((err)=>{
+            console.log(err)
+        })
+      
+  
     
   
 
