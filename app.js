@@ -8,6 +8,7 @@ var firebaseConfig = {
     appId: "1:105143785538:web:ef91aa93bd0b1683ff35db",
     measurementId: "G-GN3L12TWQM"
   };
+  console.log(firebase)
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   var messagesRef = firebase.database().ref('messages');
@@ -18,27 +19,29 @@ let messageRef = firebase.database().ref('messages');
 
 
 //Creating a listiner to the form 
-document.getElementById('submitButton').addEventListener('click', submitForm=(e)=>{
+document.getElementById('submitButton').addEventListener('click', submitForm=(event)=>{
 
- new Event(e).preventDefault();
-    
+
+
+    event.preventDefault(), 
+    event.stopPropagation();
+
+
     var name = getInputValue("name");
     var message = getInputValue("message");
     var email = getInputValue("email");
-
-    saveMessage(name,email,message)
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://node-mailer-sender.herokuapp.com/send_data');
-        xhr.send({name,message,email}).then(()=>{
-            // window.location.reload()
-        }).catch((err)=>{
-            console.log(err)
-        })
-      
-  
     
-  
+    let json= {
+        name,message,email
+    }
 
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://node-mailer-sender.herokuapp.com/send_data');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(json))
+    
+    saveMessage(name,email,message)
+    
 });
 // gets the values from the from 
 function getInputValue(id){
@@ -47,11 +50,13 @@ function getInputValue(id){
 }
 
 function saveMessage (name,email,message){
+
     let newMessageRef= messageRef.push();
     newMessageRef.set({
         name:name,
         email:email,
         message:message
     })
+   
 }
 
